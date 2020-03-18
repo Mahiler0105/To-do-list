@@ -1,0 +1,18 @@
+h1, h2 {
+    text-align: center;
+}
+
+h1{
+    color: #33c3f0;
+}
+
+#contenido {
+    margin-top: 40px;
+}
+.delete-to-do,
+.delete-to-do:hover {
+    float: right;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
