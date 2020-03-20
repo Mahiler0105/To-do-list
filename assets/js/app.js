@@ -1,6 +1,5 @@
 // DECLARACION VARIABLES
 const listaTweets = document.querySelector("#to-do-list");
-
 (() => {
   document.querySelector("#formulario").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -16,6 +15,7 @@ const listaTweets = document.querySelector("#to-do-list");
 
     const text = document.createElement("input");
     text.classList = "do";
+    text.setAttribute("disabled", "disabled");
     text.value = toDo;
 
     const div = document.createElement("div");
@@ -38,7 +38,6 @@ const listaTweets = document.querySelector("#to-do-list");
     e.preventDefault();
     if (e.target.className === "delete-to-do") {
       let toDoList = handleGetTodo();
-      // let value = e.target.parentElement.lastChild.innerText;
       let value = e.target.parentElement.previousSibling.value;
       console.log(value);
 
@@ -49,6 +48,32 @@ const listaTweets = document.querySelector("#to-do-list");
       localStorage.setItem("to-do", JSON.stringify(toDoList));
       e.target.parentElement.parentElement.remove();
       alert("Elemento Eliminado");
+    } else if (e.target.className == "edit-to-do") {
+      const input = e.target.parentElement.previousSibling;
+      e.target.classList.add("save");
+
+      e.target.innerText = "SAVE";
+
+      input.removeAttribute("disabled");
+
+      console.log(input);
+    } else if (e.target.className == "edit-to-do save") {
+      const text = e.target.parentElement.previousSibling.value;
+      const container = e.target.parentElement.parentElement.parentElement;
+      const input = e.target.parentElement.previousSibling;
+
+      let toDoList = handleGetTodo();
+      let cont = 0;
+      for (var i = 0; i < container.childNodes.length; i++) {
+        if (container.childNodes[i].firstChild.value === text) {
+          cont = i;
+        }
+      }
+      toDoList[cont] = text;
+      localStorage.setItem("to-do", JSON.stringify(toDoList));
+      e.target.classList.remove("save");
+      e.target.innerText = "EDIT";
+      input.setAttribute("disabled", "disabled");
     }
   });
 
@@ -65,6 +90,8 @@ const listaTweets = document.querySelector("#to-do-list");
 
       const text = document.createElement("input");
       text.classList = "do";
+      text.setAttribute("disabled", "disabled");
+      // text.removeAttribute("disabled");
       text.value = item;
 
       const div = document.createElement("div");

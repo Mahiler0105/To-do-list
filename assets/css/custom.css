@@ -33,8 +33,10 @@ h1 {
 
 .edit-to-do,
 edit-to-do:hover {
+    
+  cursor: pointer;
   margin: 0px 3px;
-  padding: 1px 12px;
+  padding: 1px 9px;
   border-radius: 5px;
   float: right;
   color: #fff;
@@ -60,7 +62,7 @@ edit-to-do:hover {
 }
 
 .do:focus {
-  border-color: rebeccapurple;
+  border-color: #c6e48b;
 }
 
 li {
@@ -82,4 +84,13 @@ li {
   h1 {
     font-size: 35px;
   }
+}
+
+.save{
+    background: #c6e48b;
+    padding: 1px 9px;
+}
+
+.save:hover{
+    color: green;
 }
