@@ -1,18 +1,85 @@
-h1, h2 {
-    text-align: center;
+body {
+  background-color: whitesmoke;
+  padding: 0px 20px 0px 20px;
 }
 
-h1{
-    color: #33c3f0;
+h1,
+h2 {
+  text-align: center;
+  font-size: 30px;
+}
+
+h1 {
+  color: #33c3f0;
+  font-size: 40px;
 }
 
 #contenido {
-    margin-top: 40px;
+  margin-top: 40px;
 }
-.delete-to-do,
+.delete-to-do {
+  float: right;
+  cursor: pointer;
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background-color: red;
+  font-weight: bold;
+}
+
 .delete-to-do:hover {
-    float: right;
-    cursor: pointer;
-    color: red;
-    font-weight: bold;
+  color: #222;
+}
+
+.edit-to-do,
+edit-to-do:hover {
+  margin: 0px 3px;
+  padding: 1px 12px;
+  border-radius: 5px;
+  float: right;
+  color: #fff;
+  background-color: #33c3f0;
+  font-weight: bold;
+}
+.do {
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: transparent;
+  margin: 0px 10px 0px 10px;
+  font-weight: bold;
+  width: 60%;
+  height: 15px;
+}
+
+.div-button {
+  margin: auto;
+  float: unset;
+  /* cursor: pointer; */
+}
+
+.do:focus {
+  border-color: rebeccapurple;
+}
+
+li {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+
+@media (max-width: 907px) {
+  .do {
+    width: 50%;
+  }
+  .edit-to-do {
+    font-size: 12px;
+  }
+  .delete-to-do {
+    font-size: 12px;
+  }
+  h1 {
+    font-size: 35px;
+  }
 }
