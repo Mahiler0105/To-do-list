@@ -1,5 +1,6 @@
 // DECLARACION VARIABLES
 const listaTweets = document.querySelector("#to-do-list");
+
 (() => {
   document.querySelector("#formulario").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -13,15 +14,20 @@ const listaTweets = document.querySelector("#to-do-list");
     botonBorrar.classList = "delete-to-do";
     botonBorrar.innerText = "X";
 
-    const text = document.createElement("label");
+    const text = document.createElement("input");
     text.classList = "do";
-    text.innerHTML = toDo;
+    text.value = toDo;
+
+    const div = document.createElement("div");
+    div.classList = "div-button";
 
     const li = document.createElement("li");
 
     li.appendChild(text);
-    li.appendChild(botonEditar);
-    li.appendChild(botonBorrar);
+    li.appendChild(div);
+    div.appendChild(botonBorrar);
+    div.appendChild(botonEditar);
+
     listaTweets.appendChild(li);
 
     handleAddTodo(toDo);
@@ -32,7 +38,8 @@ const listaTweets = document.querySelector("#to-do-list");
     e.preventDefault();
     if (e.target.className === "delete-to-do") {
       let toDoList = handleGetTodo();
-      let value = e.target.parentElement.lastChild.innerText;
+      // let value = e.target.parentElement.lastChild.innerText;
+      let value = e.target.parentElement.previousSibling.value;
       console.log(value);
 
       toDoList = toDoList.filter((item) => {
@@ -40,8 +47,8 @@ const listaTweets = document.querySelector("#to-do-list");
       });
 
       localStorage.setItem("to-do", JSON.stringify(toDoList));
-      e.target.parentElement.remove();
-      //   alert("Elemento Eliminado");
+      e.target.parentElement.parentElement.remove();
+      alert("Elemento Eliminado");
     }
   });
 
@@ -69,7 +76,6 @@ const listaTweets = document.querySelector("#to-do-list");
       li.appendChild(div);
 
       div.appendChild(botonBorrar);
-
       div.appendChild(botonEditar);
       listaTweets.appendChild(li);
     });
