@@ -1,17 +1,29 @@
 // DECLARACION VARIABLES
 const listaTweets = document.querySelector("#to-do-list");
-
 (() => {
   document.querySelector("#formulario").addEventListener("submit", (e) => {
     e.preventDefault();
     const toDo = document.getElementById("to-do").value;
+
+    const botonEditar = document.createElement("a");
+    botonEditar.classList = "edit-to-do";
+    botonEditar.innerText = "EDIT";
+
     const botonBorrar = document.createElement("a");
     botonBorrar.classList = "delete-to-do";
     botonBorrar.innerText = "X";
+
+    const text = document.createElement("label");
+    text.classList = "do";
+    text.innerHTML = toDo;
+
     const li = document.createElement("li");
-    li.innerHTML = toDo;
+
+    li.appendChild(text);
+    li.appendChild(botonEditar);
     li.appendChild(botonBorrar);
     listaTweets.appendChild(li);
+
     handleAddTodo(toDo);
     document.getElementById("formulario").children[0].value = "";
   });
@@ -20,15 +32,16 @@ const listaTweets = document.querySelector("#to-do-list");
     e.preventDefault();
     if (e.target.className === "delete-to-do") {
       let toDoList = handleGetTodo();
-      listaTweets.node;
-      let value = e.target.parentElement.innerText;
-      value = value.substring(0, value.length - 2);
+      let value = e.target.parentElement.lastChild.innerText;
+      console.log(value);
+
       toDoList = toDoList.filter((item) => {
         return item !== value;
       });
+
       localStorage.setItem("to-do", JSON.stringify(toDoList));
       e.target.parentElement.remove();
-      alert("Elemento Eliminado");
+      //   alert("Elemento Eliminado");
     }
   });
 
@@ -38,9 +51,26 @@ const listaTweets = document.querySelector("#to-do-list");
       const botonBorrar = document.createElement("a");
       botonBorrar.classList = "delete-to-do";
       botonBorrar.innerText = "X";
+
+      const botonEditar = document.createElement("a");
+      botonEditar.classList = "edit-to-do";
+      botonEditar.innerText = "EDIT";
+
+      const text = document.createElement("input");
+      text.classList = "do";
+      text.value = item;
+
+      const div = document.createElement("div");
+      div.classList = "div-button";
+
       const li = document.createElement("li");
-      li.innerHTML = item;
-      li.appendChild(botonBorrar);
+
+      li.appendChild(text);
+      li.appendChild(div);
+
+      div.appendChild(botonBorrar);
+
+      div.appendChild(botonEditar);
       listaTweets.appendChild(li);
     });
   });
