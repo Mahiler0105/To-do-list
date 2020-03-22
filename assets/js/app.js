@@ -39,8 +39,6 @@ const listaTweets = document.querySelector("#to-do-list");
     if (e.target.className === "delete-to-do") {
       let toDoList = handleGetTodo();
       let value = e.target.parentElement.previousSibling.value;
-      console.log(value);
-
       toDoList = toDoList.filter((item) => {
         return item !== value;
       });
@@ -55,8 +53,6 @@ const listaTweets = document.querySelector("#to-do-list");
       e.target.innerText = "SAVE";
 
       input.removeAttribute("disabled");
-
-      console.log(input);
     } else if (e.target.className == "edit-to-do save") {
       const text = e.target.parentElement.previousSibling.value;
       const container = e.target.parentElement.parentElement.parentElement;
@@ -91,7 +87,7 @@ const listaTweets = document.querySelector("#to-do-list");
       const text = document.createElement("input");
       text.classList = "do";
       text.setAttribute("disabled", "disabled");
-      // text.removeAttribute("disabled");
+
       text.value = item;
 
       const div = document.createElement("div");
