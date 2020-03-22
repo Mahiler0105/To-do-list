@@ -48,20 +48,21 @@ edit-to-do:hover {
   border-top: none;
   border-left: none;
   border-right: none;
+  border-color: transparent;
   background: transparent;
   margin: 0px 10px 0px 10px;
   font-weight: bold;
   width: 60%;
   height: 15px;
+  transition: all .3s;
 }
 
 .div-button {
   margin: auto;
   float: unset;
-  /* cursor: pointer; */
 }
 
-.do:focus {
+.do-focus {
   border-color: #c6e48b;
 }
 
