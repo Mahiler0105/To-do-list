@@ -3,104 +3,73 @@ const listaTweets = document.querySelector("#to-do-list");
 (() => {
   document.querySelector("#formulario").addEventListener("submit", (e) => {
     e.preventDefault();
+
     const toDo = document.getElementById("to-do").value;
-
-    const botonEditar = document.createElement("a");
-    botonEditar.classList = "edit-to-do";
-    botonEditar.innerText = "EDIT";
-
-    const botonBorrar = document.createElement("a");
-    botonBorrar.classList = "delete-to-do";
-    botonBorrar.innerText = "X";
-
-    const text = document.createElement("input");
-    text.classList = "do";
-    text.setAttribute("disabled", "disabled");
-    text.value = toDo;
-
-    const div = document.createElement("div");
-    div.classList = "div-button";
-
-    const li = document.createElement("li");
-
-    li.appendChild(text);
-    li.appendChild(div);
-    div.appendChild(botonBorrar);
-    div.appendChild(botonEditar);
-
-    listaTweets.appendChild(li);
-
-    handleAddTodo(toDo);
-    document.getElementById("formulario").children[0].value = "";
+    toDo === ""
+      ? alert("Escribe algo")
+      : (() => {
+          listaTweets.appendChild(getLi(toDo));
+          handleAddTodo(toDo);
+          document.getElementById("formulario").children[0].value = "";
+        })();
   });
 
   listaTweets.addEventListener("click", (e) => {
     e.preventDefault();
-    if (e.target.className === "delete-to-do") {
-      let toDoList = handleGetTodo();
-      let value = e.target.parentElement.previousSibling.value;
-      toDoList = toDoList.filter((item) => {
-        return item !== value;
-      });
+    let val = e.target.parentElement.previousSibling;
 
-      localStorage.setItem("to-do", JSON.stringify(toDoList));
-      e.target.parentElement.parentElement.remove();
-      alert("Elemento Eliminado");
-    } else if (e.target.className == "edit-to-do") {
-      const input = e.target.parentElement.previousSibling;
-      e.target.classList.add("save");
-
-      e.target.innerText = "SAVE";
-
-      input.removeAttribute("disabled");
-    } else if (e.target.className == "edit-to-do save") {
-      const text = e.target.parentElement.previousSibling.value;
-      const container = e.target.parentElement.parentElement.parentElement;
-      const input = e.target.parentElement.previousSibling;
-
-      let toDoList = handleGetTodo();
-      let cont = 0;
-      for (var i = 0; i < container.childNodes.length; i++) {
-        if (container.childNodes[i].firstChild.value === text) {
-          cont = i;
+    let toDoList = handleGetTodo();
+    switch (e.target.className) {
+      case "delete-to-do":
+        toDoList = toDoList.filter((item) => {
+          return item !== val.value;
+        });
+        localStorage.setItem("to-do", JSON.stringify(toDoList));
+        e.target.parentElement.parentElement.remove();
+        alert("Elemento eliminado");
+        break;
+      case "edit-to-do":
+        const sv = document.querySelectorAll(".save");
+        sv.forEach((item) => {
+          item.classList.remove("save");
+          item.innerHTML = "EDIT";
+          item.parentElement.previousSibling.setAttribute(
+            "disabled",
+            "disabled"
+          );
+          item.parentElement.previousSibling.classList.remove("do-focus");
+        });
+        e.target.classList.add("save");
+        e.target.innerText = "SAVE";
+        val.removeAttribute("disabled");
+        val.classList.add("do-focus");
+        break;
+      case "edit-to-do save":
+        const text = val.value;
+        const container = e.target.parentElement.parentElement.parentElement;
+        let cont = 0;
+        for (var i = 0; i < container.childNodes.length; i++) {
+          if (container.childNodes[i].firstChild.value === text) {
+            cont = i;
+          }
         }
-      }
-      toDoList[cont] = text;
-      localStorage.setItem("to-do", JSON.stringify(toDoList));
-      e.target.classList.remove("save");
-      e.target.innerText = "EDIT";
-      input.setAttribute("disabled", "disabled");
+        toDoList[cont] = text;
+        localStorage.setItem("to-do", JSON.stringify(toDoList));
+        e.target.classList.remove("save");
+        e.target.innerText = "EDIT";
+        val.setAttribute("disabled", "disabled");
+        val.classList.remove("do-focus");
+        break;
+      default:
+        console.log(e.target);
+
+        break;
     }
   });
-
   document.addEventListener("DOMContentLoaded", () => {
     let toDoList = handleGetTodo();
     toDoList.forEach((item) => {
-      const botonBorrar = document.createElement("a");
-      botonBorrar.classList = "delete-to-do";
-      botonBorrar.innerText = "X";
-
-      const botonEditar = document.createElement("a");
-      botonEditar.classList = "edit-to-do";
-      botonEditar.innerText = "EDIT";
-
-      const text = document.createElement("input");
-      text.classList = "do";
-      text.setAttribute("disabled", "disabled");
-
-      text.value = item;
-
-      const div = document.createElement("div");
-      div.classList = "div-button";
-
-      const li = document.createElement("li");
-
-      li.appendChild(text);
-      li.appendChild(div);
-
-      div.appendChild(botonBorrar);
-      div.appendChild(botonEditar);
-      listaTweets.appendChild(li);
+      listaTweets.appendChild(getLi(item));
     });
   });
 })();
@@ -121,4 +90,25 @@ function handleGetTodo() {
     toDoList = JSON.parse(localStorage.getItem("to-do"));
   }
   return toDoList;
+}
+
+function getLi(item) {
+  const botonBorrar = document.createElement("a");
+  botonBorrar.classList = "delete-to-do";
+  botonBorrar.innerText = "X";
+  const botonEditar = document.createElement("a");
+  botonEditar.classList = "edit-to-do";
+  botonEditar.innerText = "EDIT";
+  const text = document.createElement("input");
+  text.classList = "do";
+  text.setAttribute("disabled", "disabled");
+  text.value = item;
+  const div = document.createElement("div");
+  div.classList = "div-button";
+  const li = document.createElement("li");
+  li.appendChild(text);
+  li.appendChild(div);
+  div.appendChild(botonBorrar);
+  div.appendChild(botonEditar);
+  return li;
 }
