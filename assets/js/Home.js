@@ -1,1 +1,3 @@
-console.log("entre");
+(() => {
+  console.log("entre");
+})();
