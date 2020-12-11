@@ -1,3 +1,5 @@
 (() => {
-  console.log("entre");
+  setTimeout(() => {
+    console.log("estoy de vuelta");
+  }, 3000);
 })();
